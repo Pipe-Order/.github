@@ -28,7 +28,7 @@
        assets/screenshot-order.png       발주 · 견적 화면
      ───────────────────────────────────────────────────────── -->
 
-<img src="./assets/screenshot-workspace.png" width="900" alt="3D 배관 설계 워크스페이스"/>
+<img src="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/screenshot-workspace.png" width="900" alt="3D 배관 설계 워크스페이스"/>
 
 <sub>브라우저에서 조립한 3D 배관이 그대로 BOM · 견적 · 2D 도면 · 발주서가 된다</sub>
 
@@ -58,17 +58,35 @@
 
 ## 왜 만들었나
 
-배관 자재 유통 현장의 발주는 아직도 대부분 아날로그다. 문제는 손이 많이 간다는 것보다, **같은 정보를 사람이 매번 다시 옮겨 적는다**는 데 있다.
+배관 자재 제작 현장을 가까이서 지켜볼 기회가 있었다.
 
-| 단계 | 기존 방식 | 발생하는 비용 |
-|---|---|---|
-| 설계 | 현장 손 스케치 | 사양이 검색도 계산도 안 되는 형태로만 남는다 |
-| 견적 | 자재 수량 수기 산출 + 단가표 대조 | 사양 하나만 바뀌어도 전 과정을 다시 한다 |
-| 발주 | 도면 사진 · 전화 · 팩스 | 규격 오전달 → 절단 오차 → 재제작 |
-| 확인 | "제작 들어갔나요?" 전화 | 양측 모두 반복 응대 비용 |
-| 정산 | 견적 시점과 발주 시점 단가 불일치 | 금액 분쟁 |
+눈에 걸린 건 일이 고되다는 점이 아니었다. **회사에서 의사결정 권한이 가장 큰 사람이 하루의 절반을 도로 위에서 쓴다**는 점이었다.
 
-PipeFlow는 도면을 그림이 아니라 **데이터**로 다룬다. 브라우저에서 조립한 3D 배관은 구조화된 형상 데이터로 저장되고, 같은 데이터가 BOM · 견적 · 2D 도면 · 발주서로 파생된다. 사람이 옮겨 적는 구간이 사라지면 옮겨 적다 생기는 오차도 사라진다.
+의뢰 한 건이 설치까지 가는 동선은 대략 이렇다.
+
+| | 현장에서 실제로 일어나는 일 | 여기서 새는 것 |
+|:---:|---|---|
+| 1 | 영업처로 이동해 손 스케치 의뢰서를 받는다 | **왕복 이동.** 사양이 검색도 계산도 안 되는 형태로만 남는다 |
+| 2 | 작업장으로 돌아와 도면화하고 자재 수량을 수기 산출한다 | 단가표 대조까지 전부 사람 손 |
+| 3 | 다시 영업처로 이동해 도면과 사양을 확인받는다 | **왕복 이동.** 확인 한 줄을 받으러 반나절 |
+| 4 | 수정 사항이 나오면 돌아가서 2번부터 다시 한다 | 2–3 구간 전체 반복 |
+| 5 | 또 영업처로 이동해 재확인한다 | **왕복 이동** |
+| 6 | 절단 · 용접 | 규격 오전달이 여기서 드러나면 자재째 재제작 |
+| 7 | 배송 · 설치 | 이후 "제작 들어갔나요" 응대가 양쪽에 계속 |
+
+편도 한두 시간 거리를 한 건에 세 번 이상 오가는 일이 드물지 않다.
+
+그런데 그 이동의 대부분은 **"이 사양이 맞습니까"를 확인하기 위한 것**이다. 정보 한 줄 때문에 반나절이 사라지고, 그 반나절을 쓰는 사람은 대표급이라 같은 시간에 영업도 견적도 하지 못한다. 규격이 하나 어긋나면 3 → 4 → 5가 통째로 다시 돌고, 이미 절단한 자재는 되돌릴 수 없다.
+
+정산 단계에서 견적 시점과 발주 시점의 단가가 어긋나 금액 분쟁이 생기는 것도 같은 뿌리다. 어느 시점의 사양과 단가가 확정본인지 기록이 남지 않기 때문이다.
+
+**PipeFlow가 줄이려는 건 작업이 아니라 이동이다.**
+
+브라우저에서 조립한 3D 배관은 구조화된 형상 데이터로 저장되고, 같은 데이터가 BOM · 견적 · 2D 도면 · 발주서로 파생된다. 영업처는 링크로 도면을 열어 확인하고, 수정 요청은 그 자리에서 반영된다. 확인을 위한 왕복이 사라지면 4번의 재작업 루프도 같이 사라진다.
+
+발주 이후에는 진행 상태가 화면에 있으니 확인 전화도 필요 없다. 확정 시점의 사양과 단가는 스냅샷으로 박제되므로 "그때 얼마로 얘기했었나"를 다투지 않는다.
+
+사람이 옮겨 적는 구간이 사라지면, 옮겨 적다 생기는 오차도 함께 사라진다.
 
 <br/>
 
@@ -84,8 +102,8 @@ PipeFlow는 도면을 그림이 아니라 **데이터**로 다룬다. 브라우�
 ## 시스템 아키텍처
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/architecture-dark.png">
-  <img src="./assets/architecture-light.png" alt="PipeFlow 시스템 아키텍처: Browser → Nuxt 4 BFF → FastAPI → PostgreSQL 16, 외부 연동은 서버 사이드에서만" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/architecture-dark.png">
+  <img src="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/architecture-light.png" alt="PipeFlow 시스템 아키텍처: Browser → Nuxt 4 BFF → FastAPI → PostgreSQL 16, 외부 연동은 서버 사이드에서만" width="100%">
 </picture>
 
 설계를 관통하는 원칙은 세 가지다.
@@ -101,8 +119,8 @@ PipeFlow는 도면을 그림이 아니라 **데이터**로 다룬다. 브라우�
 ## 데이터 흐름
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/dataflow-dark.png">
-  <img src="./assets/dataflow-light.png" alt="PipeFlow 데이터 흐름: Project → Snapshot → Order 3단 불변화, 8개 상태의 주문 상태 머신, 결제 웹훅 재조회 구조" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/dataflow-dark.png">
+  <img src="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/dataflow-light.png" alt="PipeFlow 데이터 흐름: Project → Snapshot → Order 3단 불변화, 8개 상태의 주문 상태 머신, 결제 웹훅 재조회 구조" width="100%">
 </picture>
 
 <br/>
@@ -301,8 +319,8 @@ CI는 push · PR마다 두 저장소에서 각각 돈다. 백엔드는 **postgre
 ## 확장 시 재방문 지점
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/scaleout-dark.png">
-  <img src="./assets/scaleout-light.png" alt="EC2 1대에서 N대로 확장할 때 깨지는 지점과 이미 안전한 지점" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/scaleout-dark.png">
+  <img src="https://raw.githubusercontent.com/Pipe-Order/.github/main/profile/assets/scaleout-light.png" alt="EC2 1대에서 N대로 확장할 때 깨지는 지점과 이미 안전한 지점" width="100%">
 </picture>
 
 현재는 EC2 한 대 위에서 nginx(443) → Nuxt(:3000) · FastAPI(:8000) → docker PostgreSQL이 돈다. uvicorn worker는 **의도적으로 1개**다. rate limiter와 캐시가 프로세스 메모리에 있어서, `--workers N`을 주는 순간 카운터가 워커마다 갈라지기 때문이다. 지금 필요하지 않은 것을 미리 만들지는 않았지만, **어디까지가 이 전제 위에 서 있는지는 좌표까지 적어 뒀다.**
